@@ -19,6 +19,7 @@ h1 {
 .pad {
   width: 400px;
   display: flex;
+  gap: 5px;
   justify-content: space-between;
   flex-wrap: wrap;
   padding: 20px 30px;
