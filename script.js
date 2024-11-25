@@ -1,17 +1,36 @@
 // get
 const buttonPads = document.querySelectorAll(".key");
 const audios = document.querySelectorAll(".audio");
+var register = [];
+var recording = false;
 
 // event
-document.addEventListener("keyup", playSong);
+document.addEventListener("keyup", pressKey);
 document.addEventListener("keydown", animationAdd);
 
 
 // // function
-function playSong(event) {
-    const letterPress = event.keyCode;
+function pressKey(event) {
+    const key = event.keyCode;
+    
+    if(key == "82"){
+        if(recording === true){
+            recording = false;
+            register = [];
+        };
+        recording = true;
+    };
+
+    if(recording === true){
+        if(key != "82"){
+            register.push({"key": key});
+        };
+    };
+
+    console.log(register);
+
     audios.forEach((element) => {
-        if(element.dataset.key == letterPress){
+        if(element.dataset.key == key){
             element.play();
         };
     });
@@ -31,4 +50,8 @@ function animationAdd(event) {
             });
         };
     });
-}
+};
+
+function playSong() {
+
+};
