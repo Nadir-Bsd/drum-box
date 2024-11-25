@@ -3,6 +3,7 @@ const buttonPads = document.querySelectorAll(".key");
 const audios = document.querySelectorAll(".audio");
 var register = [];
 var recording = false;
+var start;
 
 // event
 document.addEventListener("keyup", pressKey);
@@ -12,23 +13,29 @@ document.addEventListener("keydown", animationAdd);
 // // function
 function pressKey(event) {
     const key = event.keyCode;
-    
-    if(key == "82"){
-        if(recording === true){
-            recording = false;
-            register = [];
-        };
-        recording = true;
-    };
 
+    if(key == "82"){
+        if(recording !== true){
+            register = [];
+            recording = true;
+        }else recording = false;
+    };
+    
     if(recording === true){
         if(key != "82"){
-            register.push({"key": key});
+        
+            if (!start){
+                start = Date.now();
+            };
+
+            if (Date.now === start){
+                register.push({"key": key, "time": 0});
+            }else register.push({"key": key, "time": (Date.now() - start)});
         };
     };
 
-    console.log(register);
 
+    // pour chaque audios, if l'audio = key qui est press alors play sound 
     audios.forEach((element) => {
         if(element.dataset.key == key){
             element.play();
