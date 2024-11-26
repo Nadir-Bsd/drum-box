@@ -10,23 +10,38 @@ document.addEventListener("keyup", pressKey);
 document.addEventListener("keydown", animationAdd);
 
 
-// // function
+// // functions
 function pressKey(event) {
-    const key = event.keyCode;
+    const key = String(event.keyCode);
 
-    if(key == "82"){
+    
+    
+    buttonPads.forEach((element) => {
+        
+        if(element.dataset.key === key && key !== "82"){
+            element.classList.toggle("playing");
+        };
+    });
+
+
+
+    if(key === "82"){
         if(recording !== true){
             register = [];
+            start = Date.now();
             recording = true;
         }else recording = false;
     };
     
     if(recording === true){
-        if(key != "82"){
+
+        if(key !== "82"){
         
             if (!start){
                 start = Date.now();
             };
+
+            console.log(register);
 
             if (Date.now === start){
                 register.push({"key": key, "time": 0});
@@ -34,27 +49,23 @@ function pressKey(event) {
         };
     };
 
-
     // pour chaque audios, if l'audio = key qui est press alors play sound 
     audios.forEach((element) => {
-        if(element.dataset.key == key){
+        if(element.dataset.key === key){
             element.play();
         };
     });
 };
 
+
+// add animation 
 function animationAdd(event) {
-    const letterPress = event.keyCode;
-
+    const letterPress = String(event.keyCode);
+    
     buttonPads.forEach((element) => {
-        let buttonPress = element;
-
-        if(buttonPress.dataset.key == letterPress){
-            buttonPress.classList.add("playing");
-            
-            document.addEventListener("keyup", () => {
-                buttonPress.classList.remove("playing");            
-            });
+        
+        if(element.dataset.key === letterPress){
+            element.classList.toggle("playing");
         };
     });
 };
